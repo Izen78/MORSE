@@ -4,26 +4,62 @@
 // / -> for space between words, " " for space between letters, extend without "/"
 
 const CODE_TABLE = {
+  '/': ' ',
   'a': '.-',
-  'b': '-...'
+  'b': '-...',
+  '.-': 'a',
+  '.': 'e'
 };
+const sep = '/';
+
+var past = "";
+var current = "";
+
 window.addEventListener("keyup", Dot)
-window.addEventListener("keyup", Translation)
+// window.addEventListener("keyup", Translation)
+window.addEventListener("keydown", Backspace)
 
 function Dot(event) {
   const key_pressed = event.key;
   if (key_pressed == ".") {
-    document.getElementById("main").innerHTML = document.getElementById("main").innerHTML + "."
-
+    document.getElementById("main").innerHTML = document.getElementById("main").innerHTML + ".";
+    current += '.';
+    Display();
+  } else if (key_pressed == "-") {
+    document.getElementById("main").innerHTML = document.getElementById("main").innerHTML + "-";
+    current += "-";
+    Display();
+  } else if (key_pressed == "/") {
+    document.getElementById("main").innerHTML = document.getElementById("main").innerHTML + "/";
+    past += Translation(current);
+    current = [];
   } else if (key_pressed == " ") {
-    document.getElementById("main").innerHTML = document.getElementById("main").innerHTML + " "
+    document.getElementById("main").innerHTML = document.getElementById("main").innerHTML + " ";
+    past += " ";
+    current = [];
   }
 }
 
-function Translation(event) {
-  const key_pressed = event.key;
-  var text = document.getElementById("main").innerHTML;
-  console.log(text);
+function Translation(message) {
+  if (!CODE_TABLE[message]) {
+    console.log("Undef");
+  }
+  console.log("Translation of:", message);
+  return CODE_TABLE[message];
 }
+
+function Backspace(event) {
+  const key_pressed = event.key;
+  if (key_pressed == "Backspace") {
+    current = current.slice(0, -1);
+  }
+}
+
+function Display() {
+  document.getElementById("translation").innerHTML = past;
+  document.getElementById("translation").innerHTML += Translation(current);
+  // document.getElementById("translation").innerHTML += CODE_TABLE[current];
+}
+
 
 console.log(CODE_TABLE);
