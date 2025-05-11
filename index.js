@@ -2,11 +2,9 @@
 // 2. Separate Morse Code Box and Translation Box
 // 3. Translation???
 // / -> for space between words, " " for space between letters, extend without "/"
+// 4. Create parser to diallow illegal moves e.g. space and "/" together
 
 const CODE_TABLE = {
-  '/': ' ',
-  'a': '.-',
-  'b': '-...',
   '.-': 'a',
   '.': 'e'
 };
@@ -35,14 +33,14 @@ function Dot(event) {
     current = [];
   } else if (key_pressed == " ") {
     document.getElementById("main").innerHTML = document.getElementById("main").innerHTML + " ";
-    past += " ";
+    past += Translation(current) + " ";
     current = [];
   }
 }
 
 function Translation(message) {
   if (!CODE_TABLE[message]) {
-    console.log("Undef");
+    console.log("Undef:", message);
   }
   console.log("Translation of:", message);
   return CODE_TABLE[message];
