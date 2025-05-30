@@ -15,6 +15,12 @@ class MorseNode {
   getVal() {
     return this.val;
   }
+  getLeft() {
+    return this.left;
+  }
+  getRight() {
+    return this.right;
+  }
 }
 
 class MorseTree {
@@ -27,6 +33,7 @@ class MorseTree {
   create() {
     this.tree = new MorseNode("Start");
     this.tree.setLeft(new MorseNode("E"));
+    this.tree.left.setRight(new MorseNode("A"));
     return this.tree;
   }
 
@@ -37,5 +44,6 @@ class MorseTree {
 }
 
 export function createTree() {
-  return new MorseTree();
+  const tree = new MorseTree();
+  return tree.tree;
 }
